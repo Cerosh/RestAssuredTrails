@@ -24,7 +24,7 @@ public class PlaylistTests {
     ResponseSpecification responseSpecification;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
-    String access_token="BQCTow0ElfY5JCwaRhq5_UzQIFsByH-1aRsqUqG6USxv47Cxkw8_OxEAgMt0g8eaONbseMMCzzdFJJTP_7-BpxRH_97l9iAHYTYBtkL5tJHAWzTkgh9HT7g-bH6wNkQ6rv-HNvU2c1oaH_RzcA0Se-Tjv3CDD88csEb9plG1s0usdmcqT_gYqRrdbwi3-2O1ijYQtwmPKjavD9uBqotYAzJC46Y234sucbPFmdAZ7hgp";
+    String access_token="BQCqAtSYDisjPrFKi7yoLVJ2aEsZA6OqVpMKMQnwjv8cbtCmFwMiuUM_JZTBOLh0toNyPzusz3vWqant0UBc2kFKup2KOx69PbJoaFb_HNcLbs-nJWQY6J3E1XQefodlw7TjnyTqVANRtq4utPiav8TdAtd3YnlNrWi6BFEOZfjbFTelfCGkLoaqvwaIZOt0aBx_8Wb73PF6hBRlFmYzPd01S8VLmFnafUv_0ka86Lb8s6M72FxXnC4ilQ";
     String user_id = "ovvhvt6g6sf9ci36147nhjnf4";
 
     @BeforeClass
@@ -43,10 +43,10 @@ public class PlaylistTests {
     @Test
     public void shouldBeAbleToCreatePlaylist(){
         String val = "value";
-        Playlist requestPlaylist = new Playlist();
-        requestPlaylist.setName("Playlist name "+ dtf.format(now));
-        requestPlaylist.setDescription("Playlist description through Pojo");
-        requestPlaylist.setPublic(false);
+        Playlist requestPlaylist = new Playlist().
+                setName("Playlist name "+ dtf.format(now)).
+                setDescription("Playlist description through Pojo with Builder Pattern").
+                setPublic(false);
         Playlist responsePlaylist = given(requestSpecification).body(requestPlaylist).
                 when().post("/users/"+user_id+"/playlists").
                 then().spec(responseSpecification).
@@ -59,10 +59,10 @@ public class PlaylistTests {
     }
     @Test
     public void shouldBeAbleToGetPlaylist(){
-        Playlist requestPlaylist = new Playlist();
-        requestPlaylist.setName("Playlist name");
-        requestPlaylist.setDescription("Playlist description");
-        requestPlaylist.setPublic(false);
+        Playlist requestPlaylist = new Playlist().
+                setName("Playlist name").
+                setDescription("Playlist description").
+                setPublic(false);
         Playlist responsePlaylist = given(requestSpecification).
                 when().get("/playlists/0MtI3PK5jOMQPNcGYBvLZr").
                 then().spec(responseSpecification).
@@ -75,10 +75,10 @@ public class PlaylistTests {
     }
     @Test
     public void shouldBeAbleToUpdatePlaylist(){
-        Playlist requestPlaylist = new Playlist();
-        requestPlaylist.setName("Playlist name");
-        requestPlaylist.setDescription("Playlist description through Pojo");
-        requestPlaylist.setPublic(false);
+        Playlist requestPlaylist = new Playlist().
+                setName("Playlist name").
+                setDescription("Playlist description through Pojo with builder pattern").
+                setPublic(false);
 
         given(requestSpecification).body(requestPlaylist).
                 when().put("/playlists/7hZSEDITUtd56Tdw1OcIpH").
@@ -87,10 +87,10 @@ public class PlaylistTests {
     }
     @Test
     public void shouldNotBeAbleToCreatePlaylistWithWrongAccessToken(){
-        Playlist requestPlaylist = new Playlist();
-        requestPlaylist.setName("Playlist name");
-        requestPlaylist.setDescription("Playlist description through Pojo");
-        requestPlaylist.setPublic(false);
+        Playlist requestPlaylist = new Playlist().
+                setName("Playlist name").
+                setDescription("Playlist description through Pojo with builder pattern").
+                setPublic(false);
 
         ErrorRoot responseError = given().baseUri("https://api.spotify.com").
                 basePath("/v1").
