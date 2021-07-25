@@ -2,44 +2,23 @@ package com.spotify.outh2.tests;
 
 import com.spotify.outh2.pojo.ErrorRoot;
 import com.spotify.outh2.pojo.Playlist;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static com.spotify.outh2.api.SpecBuilder.getRequestSpecification;
+import static com.spotify.outh2.api.SpecBuilder.getResponseSpecification;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class PlaylistTests {
-    RequestSpecification requestSpecification;
-    ResponseSpecification responseSpecification;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
-    String access_token="BQCqAtSYDisjPrFKi7yoLVJ2aEsZA6OqVpMKMQnwjv8cbtCmFwMiuUM_JZTBOLh0toNyPzusz3vWqant0UBc2kFKup2KOx69PbJoaFb_HNcLbs-nJWQY6J3E1XQefodlw7TjnyTqVANRtq4utPiav8TdAtd3YnlNrWi6BFEOZfjbFTelfCGkLoaqvwaIZOt0aBx_8Wb73PF6hBRlFmYzPd01S8VLmFnafUv_0ka86Lb8s6M72FxXnC4ilQ";
     String user_id = "ovvhvt6g6sf9ci36147nhjnf4";
 
-    @BeforeClass
-    public void beforeClass(){
-        RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder().
-                setBaseUri("https://api.spotify.com").
-                setBasePath("/v1").
-                addHeader("Authorization","Bearer "+ access_token).
-                setContentType(ContentType.JSON).log(LogDetail.ALL);
-        requestSpecification = requestSpecBuilder.build();
-
-        ResponseSpecBuilder responseSpecBuilder = new ResponseSpecBuilder().
-               log(LogDetail.ALL);
-        responseSpecification = responseSpecBuilder.build();
-    }
     @Test
     public void shouldBeAbleToCreatePlaylist(){
         String val = "value";
@@ -47,9 +26,9 @@ public class PlaylistTests {
                 setName("Playlist name "+ dtf.format(now)).
                 setDescription("Playlist description through Pojo with Builder Pattern").
                 setPublic(false);
-        Playlist responsePlaylist = given(requestSpecification).body(requestPlaylist).
+        Playlist responsePlaylist = given(getRequestSpecification()).body(requestPlaylist).
                 when().post("/users/"+user_id+"/playlists").
-                then().spec(responseSpecification).
+                then().spec(getResponseSpecification()).
                 assertThat().statusCode(201).
                 contentType(ContentType.JSON).
                 extract().as(Playlist.class);
@@ -63,9 +42,9 @@ public class PlaylistTests {
                 setName("Playlist name").
                 setDescription("Playlist description").
                 setPublic(false);
-        Playlist responsePlaylist = given(requestSpecification).
+        Playlist responsePlaylist = given(getRequestSpecification()).
                 when().get("/playlists/0MtI3PK5jOMQPNcGYBvLZr").
-                then().spec(responseSpecification).
+                then().spec(getResponseSpecification()).
                 assertThat().statusCode(200).
                 contentType(ContentType.JSON).
                 extract().as(Playlist.class);
@@ -80,9 +59,9 @@ public class PlaylistTests {
                 setDescription("Playlist description through Pojo with builder pattern").
                 setPublic(false);
 
-        given(requestSpecification).body(requestPlaylist).
+        given(getRequestSpecification()).body(requestPlaylist).
                 when().put("/playlists/7hZSEDITUtd56Tdw1OcIpH").
-                then().spec(responseSpecification).
+                then().spec(getResponseSpecification()).
                 assertThat().statusCode(200);
     }
     @Test
@@ -99,7 +78,7 @@ public class PlaylistTests {
                 body(requestPlaylist).
                 log().all().
                 when().post("/users/"+user_id+"/playlists").
-                then().spec(responseSpecification).
+                then().spec(getResponseSpecification()).
                 assertThat().statusCode(401).
                 extract().as(ErrorRoot.class);
         assertThat(responseError.getError().getStatus(), equalTo(401));
