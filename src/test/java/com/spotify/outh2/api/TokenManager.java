@@ -1,15 +1,10 @@
 package com.spotify.outh2.api;
 
 import com.spotify.outh2.utils.ConfigLoader;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import java.time.Instant;
 import java.util.HashMap;
-
-import static com.spotify.outh2.api.RestResource.postAccount;
-import static com.spotify.outh2.api.SpecBuilder.getResponseSpecification;
-import static io.restassured.RestAssured.given;
 
 
 public class TokenManager {
