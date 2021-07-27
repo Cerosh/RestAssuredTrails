@@ -28,7 +28,7 @@ public class PlaylistTests {
     public void shouldBeAbleToGetPlaylist() {
         Playlist requestPlaylist = PlaylistApi.playListBuilder("Playlist name",
                 "Playlist description after removing duplicate code", false);
-                Response response = PlaylistApi.get(DataLoader.getInstance().getDataProperty("get_playlist_id"));
+        Response response = PlaylistApi.get(DataLoader.getInstance().getDataProperty("get_playlist_id"));
         RestResource.assertStatusCode(response, 200);
         PlaylistApi.assertPlaylistEquals(response.as(Playlist.class), requestPlaylist);
     }

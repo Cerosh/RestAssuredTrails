@@ -5,9 +5,16 @@ import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.jackson.Jacksonized;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
+@Getter
+@Setter
+@Builder
+@Jacksonized
 @Generated("jsonschema2pojo")
 public class Owner {
 
@@ -23,65 +30,5 @@ public class Owner {
     private String type;
     @JsonProperty("uri")
     private String uri;
-
-    @JsonProperty("display_name")
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    @JsonProperty("display_name")
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    @JsonProperty("external_urls")
-    public ExternalUrls__1 getExternalUrls() {
-        return externalUrls;
-    }
-
-    @JsonProperty("external_urls")
-    public void setExternalUrls(ExternalUrls__1 externalUrls) {
-        this.externalUrls = externalUrls;
-    }
-
-    @JsonProperty("href")
-    public String getHref() {
-        return href;
-    }
-
-    @JsonProperty("href")
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    @JsonProperty("id")
-    public String getId() {
-        return id;
-    }
-
-    @JsonProperty("id")
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @JsonProperty("type")
-    public String getType() {
-        return type;
-    }
-
-    @JsonProperty("type")
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @JsonProperty("uri")
-    public String getUri() {
-        return uri;
-    }
-
-    @JsonProperty("uri")
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
 
 }

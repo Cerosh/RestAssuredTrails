@@ -29,15 +29,17 @@ public class PlaylistApi {
     }
 
     public static Playlist playListBuilder(String name, String description, Boolean publicValue) {
-        return new Playlist().
-                setName(name).
-                setDescription(description).
-                setPublic(publicValue);
+        return Playlist.builder().
+                name(name).
+                description(description).
+                _public(publicValue).
+                build();
+
     }
 
     public static void assertPlaylistEquals(Playlist responsePlaylist, Playlist requestPlaylist) {
         assertThat(responsePlaylist.getName(), equalTo(requestPlaylist.getName()));
         assertThat(responsePlaylist.getDescription(), equalTo(requestPlaylist.getDescription()));
-        assertThat(responsePlaylist.getPublic(), equalTo(requestPlaylist.getPublic()));
+        assertThat(responsePlaylist.get_public(), equalTo(requestPlaylist.get_public()));
     }
 }
