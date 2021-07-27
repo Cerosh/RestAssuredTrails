@@ -1,5 +1,6 @@
 package com.spotify.outh2.api;
 
+import com.spotify.outh2.utils.ConfigLoader;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -34,10 +35,10 @@ public class TokenManager {
 
     public static Response renewToken() {
         HashMap<String, String> formParams = new HashMap<>();
-        formParams.put("client_id", "cb60b3c0668d4992a812ee1360ff3820");
-        formParams.put("client_secret", "d25962af4b43435684d168dcba27c73d");
-        formParams.put("grant_type", "refresh_token");
-        formParams.put("refresh_token", "AQBQtk6PWz0EUnvFAX0Fdvw7Pq5tOKRbIK_uQ5zds-f-CPgl1F8hHD9myTPQi5tmI4gVrtzje6hgNKxy9AnEuNTM0lWVYTExlyAFSG_rks0FE7OFKTGRnejFQrAlZtaUSuU");
+        formParams.put("client_id", ConfigLoader.getInstance().getConfigProperty("client_id"));
+        formParams.put("client_secret", ConfigLoader.getInstance().getConfigProperty("client_secret"));
+        formParams.put("grant_type", ConfigLoader.getInstance().getConfigProperty("grant_type"));
+        formParams.put("refresh_token", ConfigLoader.getInstance().getConfigProperty("refresh_token"));
         Response response = RestResource.postAccount(formParams);
         if (response.statusCode() != 200) {
             throw new RuntimeException("Token renewal failed");
