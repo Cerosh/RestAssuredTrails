@@ -15,7 +15,8 @@ import static org.hamcrest.core.IsEqual.equalTo;
 public class RestResource {
     public static Response post(String access_token, String path, Object request_body) {
         return given(getRequestSpecification()).
-                header("Authorization", "Bearer " + access_token).body(request_body).
+                auth().oauth2(access_token).
+                body(request_body).
                 when().post(path).
                 then().spec(getResponseSpecification()).extract().response();
     }
@@ -28,20 +29,20 @@ public class RestResource {
     }
 
     public static Response get(String access_token, String path) {
-        return given(getRequestSpecification()).header("Authorization", "Bearer " + access_token).
+        return given(getRequestSpecification()).auth().oauth2(access_token).
                 when().get(path).
                 then().spec(getResponseSpecification()).extract().response();
     }
 
     public static Response put(String access_token, String path, Object request_body) {
         return given(getRequestSpecification()).
-                header("Authorization", "Bearer " + access_token).body(request_body).
+                auth().oauth2(access_token).body(request_body).
                 when().put(path).
                 then().spec(getResponseSpecification()).extract().response();
     }
 
-    public static void assertStatusCode(Response response, int statusCode) {
-        assertThat(response.statusCode(), equalTo(statusCode));
+    public static void assertStatusCode(Response response, StatusCode statusCode) {
+        assertThat(response.statusCode(), equalTo(statusCode.code));
     }
 
     public static void assertError(ErrorRoot responseError, String errorMessage) {
