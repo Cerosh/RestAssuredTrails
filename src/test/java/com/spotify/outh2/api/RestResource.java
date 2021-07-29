@@ -1,6 +1,7 @@
 package com.spotify.outh2.api;
 
 import com.spotify.outh2.pojo.ErrorRoot;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
@@ -41,10 +42,12 @@ public class RestResource {
                 then().spec(getResponseSpecification()).extract().response();
     }
 
+    @Step
     public static void assertStatusCode(Response response, StatusCode statusCode) {
         assertThat(response.statusCode(), equalTo(statusCode.code));
     }
 
+    @Step
     public static void assertError(ErrorRoot responseError, String errorMessage) {
         assertThat(responseError.getError().getMessage(), equalTo(errorMessage));
     }
