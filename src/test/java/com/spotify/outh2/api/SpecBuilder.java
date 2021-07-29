@@ -15,14 +15,14 @@ public class SpecBuilder {
 
     public static RequestSpecification getRequestSpecification() {
         return new RequestSpecBuilder().
-                setBaseUri("https://api.spotify.com").
+                setBaseUri(System.getProperty("BASE_URI")).
                 setBasePath(BASE_PATH).
                 setContentType(ContentType.JSON).log(LogDetail.ALL).build();
     }
 
     public static RequestSpecification getAccountRequestSpecification(HashMap<String, String> formParams) {
         return new RequestSpecBuilder().
-                setBaseUri("https://accounts.spotify.com").
+                setBaseUri(System.getProperty("ACCOUNT_BASE_URI")).
                 addFormParams(formParams).
                 setContentType(ContentType.URLENC).log(LogDetail.ALL).build();
     }

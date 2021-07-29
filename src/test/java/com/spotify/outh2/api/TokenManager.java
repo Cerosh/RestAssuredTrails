@@ -23,6 +23,7 @@ public class TokenManager {
                 System.out.println("Token is valid");
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Fetching Token failed");
         }
         return access_token;
